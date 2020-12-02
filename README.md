@@ -12,11 +12,11 @@ The goal of elector is to run the elections for AIMOS.
   - `elector.R` contains a script that runs a mock election for all
     offices (for which there are ballots).
 
-  - `test-election.csv` contains the raw test ballots on which it
-    depends.
+  - `AIMOS_2020_Election_Test.csv` contains the raw test ballots on
+    which it depends.
 
   - `meta_election.csv` contains the metadata which allows cleaning of
     the test data.
 
-  - `test-election.qsf` contains the qualtrics survey file that
-    generated the data.
+  - `test-election.qsf` contains a qualtrics survey file that provides a
+    scaffold for ballot collection.
