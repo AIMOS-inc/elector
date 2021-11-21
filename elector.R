@@ -23,7 +23,7 @@ aimos_stv <-  function(ballots, seats) {
 meta <-  read_csv("meta_election.csv")
 
 data_path <- here("data")
-votes_file <- file.path(data_path, "AIMOS2021election_November 20, 2021_19.16.csv")
+votes_file <- file.path(data_path, "2021test2ForContarino.csv")
 
 #df <-  misinformation::read_qualtrics("AIMOS_2020_election_Test.csv")
 df <-  misinformation::read_qualtrics(votes_file)
@@ -34,16 +34,14 @@ dg <- df %>% misinformation::meta_rename(meta, old =  name_raw, new = name_clean
 
 # General election------
 
-
-
-#Validate ballots. To do so, have to clean ballots first
 ballots<- dg %>%
-  select(starts_with("gen")) %>% #general seats, which is the only kind there is for AIMOS from 2021
+  select(starts_with("g_")) %>% #general seats, which is the only kind there is for AIMOS from 2021
   as.data.frame()
 
+#Validate ballots. Must be dataframe, not tibble
 validateBallots(ballots)
 #cballots <- cleanBallots(ballots)
 
-ballots %>%  stv(seats = 1)
-
+results <- ballots %>%  stv(seats = 3)
+results$elected
 
