@@ -6,7 +6,6 @@ library(here)
 
 #See the README file for more information
 
-
 # Election function (set defaults) ----------------------------------------
 aimos_stv <-  function(ballots, seats) {
 
@@ -23,14 +22,12 @@ aimos_stv <-  function(ballots, seats) {
 meta <-  read_csv("meta_election.csv")
 
 data_path <- here("data")
-votes_file <- file.path(data_path, "2021test2ForContarino.csv")
-
-#df <-  misinformation::read_qualtrics("AIMOS_2020_election_Test.csv")
+#"AIMOS_2020_election_Test.csv"
+votes_file <- file.path(data_path, "AIMOS2021electionRandomiseResponses_test.csv")
 df <-  misinformation::read_qualtrics(votes_file)
 
 # Use Ling's function to rename the columns from the qualtrics file
 dg <- df %>% misinformation::meta_rename(meta, old =  name_raw, new = name_clean)
-
 
 # General election------
 
