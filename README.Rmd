@@ -24,3 +24,14 @@ The goal of elector is to run the elections for AIMOS.
 - `meta_election.csv` contains the metadata which allows cleaning of the test data.
 
 - `test-election.qsf` contains a qualtrics survey file that provides a scaffold for ballot collection.
+
+## Election information
+
+Election rules are in the by-laws at the website aimos.community
+
+2021 is the first year where members are elected to the Board rather than to specific offices
+all 9 spots are up for grabs.
+President, Vice-president, Treasurer, Secretary, Student representative, Diversity&Inclusion are all elected by the Executive Committee after the Committee are elected from the membership
+
+If using Qualtrics for the election, set the survey to invitation only
+To edit your survey distribution options, select Survey options > Security > Survey access.

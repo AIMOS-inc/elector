@@ -2,11 +2,10 @@ library(STV) #Single Transferable Vote Counting.
 library(tidyverse)
 library(misinformation) #devtools::install_github("lingtax/misinformation")
 #remotes::install_github("Lingtax/misinformation")
+library(here)
 
-# Election rules are in the by-laws at the website aimos.community
+#See the README file for more information
 
-#2021 is the first year where members are elected to the Board rather than to specific offices
-#all 9 spots are up for grabs.
 
 # Election function (set defaults) ----------------------------------------
 aimos_stv <-  function(ballots, seats) {
@@ -18,61 +17,33 @@ aimos_stv <-  function(ballots, seats) {
       quotaMethod = "Droop")
 }
 
+#NOT SURE CHOICE RANDOMSIATION WILL WORK
 
-# Read ballots ------------------------------------------------------------
+# Read ballot columnn names file, used only for renaming qualtrics file column names
 meta <-  read_csv("meta_election.csv")
-df <-  misinformation::read_qualtrics("AIMOS_2020_election_Test.csv")
-dg <- df %>% meta_rename(meta, old =  name_raw, new = name_clean)
 
-# President ---------------------------------------------------------------
-dg %>%
-  select(starts_with("pres")) %>%
-  as.data.frame() %>%
-  aimos_stv(seats = 1)
+data_path <- here("data")
+votes_file <- file.path(data_path, "AIMOS2021election_November 20, 2021_19.16.csv")
+
+#df <-  misinformation::read_qualtrics("AIMOS_2020_election_Test.csv")
+df <-  misinformation::read_qualtrics(votes_file)
+
+# Use Ling's function to rename the columns from the qualtrics file
+dg <- df %>% misinformation::meta_rename(meta, old =  name_raw, new = name_clean)
 
 
-# Vice-president ----------------------------------------------------------
-dg %>%
-  select(starts_with("vicepres")) %>%
-  as.data.frame() %>%
-  stv(seats = 1)
+# General election------
 
-# Treasurer  ----------------------------------------------------------
-dg %>%
-  select(starts_with("treas")) %>%
-  as.data.frame() %>%
-  stv(seats = 1)
 
-# Secretary ----------------------------------------------------------
 
-dg %>%
-  select(starts_with("sec")) %>%
-  as.data.frame() %>%
-  stv(seats = 1)
+#Validate ballots. To do so, have to clean ballots first
+ballots<- dg %>%
+  select(starts_with("gen")) %>% #general seats, which is the only kind there is for AIMOS from 2021
+  as.data.frame()
 
-# Student representative ----------------------------------------------------------
+validateBallots(ballots)
+#cballots <- cleanBallots(ballots)
 
-dg %>%
-  select(starts_with("student")) %>%
-  as.data.frame() %>%
-  stv(seats = 1)
-
-# D & I ----------------------------------------------------------
-
-dg %>%
-  select(starts_with("div")) %>%
-  as.data.frame() %>%
-  stv(seats = 1)
-
-# General ----------------------------------------------------------
-
-# provide names of elected candidates after previous rounds
-# elected <- c("", "")
-dg %>%
-  select(starts_with("gen")) %>%
-  select(-contains(elected)) %>%
-  as.data.frame() %>%
-  cleanBallots() %>%
-  stv(seats = 6)
+ballots %>%  stv(seats = 1)
 
 
