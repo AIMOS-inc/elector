@@ -34,6 +34,9 @@ ballots<- dg %>%
   select(starts_with("g_")) %>% #general seats, which is the only kind there is for AIMOS from 2021
   as.data.frame()
 
+#WATCH OUT! The first 2 completed ballots were tests by Alex in 2021, SO THEY'RE DELTED BELOW
+ballots<- ballots[3:nrow(ballots),]
+
 #Pretty print candidate names
 candidateNames <- stringr::str_remove(colnames(ballots),"g_")
 paste(c("The candidates are:", candidateNames), collapse=" ")
