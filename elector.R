@@ -34,6 +34,10 @@ ballots<- dg %>%
   select(starts_with("g_")) %>% #general seats, which is the only kind there is for AIMOS from 2021
   as.data.frame()
 
+#Pretty print candidate names
+candidateNames <- str_remove(colnames(ballots),"g_")
+paste(c("The candidates are:", candidateNames), collapse=" ")
+
 #Validate ballots. Must be dataframe, not tibble
 #validateBallots(ballots)  #Didn't work without cleaning first with real data because said
 ## [1] "Row(s): 6 do not contain any ranks."
@@ -47,5 +51,10 @@ validateBallots(cballots)
 results <- cballots %>%  stv(seats = 9)
 results$elected
 
+#Pretty print winners
+winners <- str_remove(results$elected,"g_")
+paste(c("The winners are:", winners), collapse=" ")
+
 #Sanity check by assessing mean rank to each candidate
 colMeans(cballots)
+
