@@ -23,19 +23,16 @@ meta <-  read_csv("meta_election.csv")
 
 data_path <- here("data")
 #"AIMOS_2020_election_Test.csv"
-votes_file <- file.path(data_path, "AIMOS2021electionRandomiseResponses_December 1, 2021_03.29.csv")
+votes_file <- file.path(data_path, "AIMOS_2022_election_votes.csv")
 df <-  misinformation::read_qualtrics(votes_file)
 
-# Use Ling's function to rename the columns from the qualtrics file
+# Use Ling's function to rename the columns from the qualtrics file, after lowercase been applied already I think
 dg <- df %>% misinformation::meta_rename(meta, old =  name_raw, new = name_clean)
 
 # General election------
 ballots<- dg %>%
   select(starts_with("g_")) %>% #general seats, which is the only kind there is for AIMOS from 2021
   as.data.frame()
-
-#WATCH OUT! The first 2 completed ballots were tests by Alex in 2021, SO THEY'RE DELETED BELOW
-ballots<- ballots[3:nrow(ballots),]
 
 #Pretty print candidate names
 candidateNames <- stringr::str_remove(colnames(ballots),"g_")
@@ -51,7 +48,7 @@ paste(c("The candidates are:", candidateNames), collapse=" ")
 cballots <- cleanBallots(ballots)
 validateBallots(cballots)
 
-results <- cballots %>%  stv(seats = 9)
+results <- cballots %>%  stv(seats = 3)
 results$elected
 
 #Pretty print winners

@@ -1,6 +1,6 @@
 dataset_pos,name_raw,name_clean
-1,Response_ID,response_id
-11,Rank_TH,g_TH
-12,Rank_FM,g_FM
-13,Rank_BR,g_BR
-14,Rank_AT,g_AT
+1,response_id,response_id
+2,rank_th,g_TH
+3,rank_fm,g_FM
+4,rank_br,g_BR
+5,rank_at,g_AT
